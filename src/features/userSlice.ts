@@ -3,6 +3,7 @@ import { InitialUserState } from "../types/user";
 
 const initialState: InitialUserState = {
 	userAuth: false,
+	userId: null,
 	userName: null,
 };
 
@@ -12,15 +13,17 @@ export const userSlice = createSlice({
 	reducers: {
 		login: (state, action) => {
 			state.userAuth = true;
+			state.userId = action.payload.id;
 			state.userName = action.payload.name;
-			localStorage.setItem('userName', action.payload.name);
-      localStorage.setItem('userAuth', 'true');
+			sessionStorage.setItem('userId', action.payload.id);
+			sessionStorage.setItem('userName', action.payload.name);
+      sessionStorage.setItem('userAuth', 'true');
 		},
 		logout: (state) => {
 			state.userAuth = false;
 			state.userName = null;
-			localStorage.removeItem('userName');
-			localStorage.removeItem('userAuth');
+			sessionStorage.removeItem('userName');
+			sessionStorage.removeItem('userAuth');
 		},
 	},
 });

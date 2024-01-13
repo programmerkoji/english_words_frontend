@@ -6,13 +6,14 @@ import { useEffect } from "react";
 import { login } from "./features/userSlice";
 
 function App() {
-	const user = useAppSelector((state) => state.userName);
+	const user = useAppSelector((state) => state.user.userName);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		const storedUserName = localStorage.getItem("userName");
+		const storedUserId = sessionStorage.getItem("userId");
+		const storedUserName = sessionStorage.getItem("userName");
 		if (storedUserName) {
-			dispatch(login({ name: storedUserName }));
+			dispatch(login({ id: storedUserId, name: storedUserName }));
 		}
 	}, [dispatch]);
 
