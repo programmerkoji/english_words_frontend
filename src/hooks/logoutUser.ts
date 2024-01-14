@@ -2,9 +2,9 @@ import axios from "axios";
 
 export const logoutUser = async () => {
 	try {
-		await axios.get("http://localhost:8000/sanctum/csrf-cookie");
+		await axios.get("sanctum/csrf-cookie");
 		const response = await axios.post(
-			"http://localhost:8000/api/logout",
+			"api/logout",
 			{},
 			{
 				withCredentials: true,

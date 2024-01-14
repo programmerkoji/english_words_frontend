@@ -4,7 +4,7 @@ import { WordResponseApi } from "../types/word";
 export const fetchWordAPI = async (
   currentPage: number,
   memorySearch: string = "",
-  sort: number = 1
+  sort: string = ""
 ) => {
   try {
 		let url = `http://localhost:8000/api/word?page=${currentPage}`;

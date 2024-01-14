@@ -6,7 +6,7 @@ export const useWords = () => {
 	const [wordsData, setWordsData] = useState<Word[]>([]);
 	const fetchPost = async () => {
 		try {
-			const response = await axios.get("http://localhost:8000/api/word", {
+			const response = await axios.get("api/word", {
 				withCredentials: true,
 				withXSRFToken: true,
 			});

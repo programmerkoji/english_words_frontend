@@ -7,6 +7,8 @@ const initialState: WordResponseApi = {
 	data: [],
 	last_page: 1,
 	total: 0,
+	memorySearch: '',
+	sort: '',
 };
 
 export const fetchWords = createAsyncThunk(
@@ -14,7 +16,7 @@ export const fetchWords = createAsyncThunk(
 	async (params: {
 		currentPage: number;
 		memorySearch: string;
-		sort: number;
+		sort: string;
 	}) => {
 		try {
 			const response = await fetchWordAPI(

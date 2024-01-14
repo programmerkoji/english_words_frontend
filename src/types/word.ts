@@ -16,4 +16,6 @@ export type WordResponseApi = {
   data: Word[];
   last_page: number;
   total: number;
+  memorySearch: string;
+  sort: string;
 }
