@@ -21,7 +21,9 @@ export const userSlice = createSlice({
 		},
 		logout: (state) => {
 			state.userAuth = false;
+			state.userId = null;
 			state.userName = null;
+			sessionStorage.removeItem('userId');
 			sessionStorage.removeItem('userName');
 			sessionStorage.removeItem('userAuth');
 		},

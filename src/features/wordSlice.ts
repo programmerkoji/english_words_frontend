@@ -3,10 +3,10 @@ import { WordResponseApi } from "../types/word";
 import { fetchWordAPI } from "../api/fetchWordAPI";
 
 const initialState: WordResponseApi = {
-  current_page: 1,
-  data: [],
-  last_page: 1,
-  total: 0,
+	current_page: 1,
+	data: [],
+	last_page: 1,
+	total: 0,
 };
 
 export const fetchWords = createAsyncThunk(
@@ -24,7 +24,7 @@ export const fetchWords = createAsyncThunk(
 			);
 			return response;
 		} catch (error) {
-			throw new Error('Failed to fetch words');
+			throw new Error("Failed to fetch words");
 		}
 	}
 );
@@ -33,15 +33,14 @@ export const wordSlice = createSlice({
 	name: "word",
 	initialState,
 	reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchWords.fulfilled, (state, action) => {
-        state.current_page = action.payload.current_page;
-        state.data = action.payload.data;
-        state.last_page = action.payload.last_page;
-        state.total = action.payload.total;
-      })
-  },
+	extraReducers: (builder) => {
+		builder.addCase(fetchWords.fulfilled, (state, action) => {
+			state.current_page = action.payload.current_page;
+			state.data = action.payload.data;
+			state.last_page = action.payload.last_page;
+			state.total = action.payload.total;
+		});
+	},
 });
 
 export const {} = wordSlice.actions;
