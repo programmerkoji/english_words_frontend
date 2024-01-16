@@ -7,8 +7,6 @@ import { login } from "./features/userSlice";
 
 function App() {
 	const user = useAppSelector((state) => state.user.userName);
-	console.log(user);
-	
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -29,7 +27,10 @@ function App() {
 				path="/login"
 				element={user ? <Navigate to="/word" /> : <Login />}
 			/>
-			<Route path="/word" element={user ? <Word /> : <Navigate to="/login" />} />
+			<Route
+				path="/word"
+				element={user ? <Word /> : <Navigate to="/login" />}
+			/>
 		</Routes>
 	);
 }

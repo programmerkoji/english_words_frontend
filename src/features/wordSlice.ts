@@ -7,8 +7,8 @@ const initialState: WordResponseApi = {
 	data: [],
 	last_page: 1,
 	total: 0,
-	memorySearch: '',
-	sort: '',
+	memorySearch: sessionStorage.getItem("memorySearch") || "",
+	sort: sessionStorage.getItem("sort") || "",
 };
 
 export const fetchWords = createAsyncThunk(
@@ -34,16 +34,32 @@ export const fetchWords = createAsyncThunk(
 export const wordSlice = createSlice({
 	name: "word",
 	initialState,
-	reducers: {},
+	reducers: {
+		setMemorySearch: (state, action) => {
+			state.memorySearch = action.payload;
+			sessionStorage.setItem("memorySearch", action.payload);
+		},
+		setSort: (state, action) => {
+			state.sort = action.payload;
+			sessionStorage.setItem("sort", action.payload);
+		},
+	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchWords.fulfilled, (state, action) => {
-			state.current_page = action.payload.current_page;
-			state.data = action.payload.data;
-			state.last_page = action.payload.last_page;
-			state.total = action.payload.total;
+			const { current_page, data, last_page, total, memorySearch, sort } =
+				action.payload;
+			return {
+				...state,
+				current_page,
+				data,
+				last_page,
+				total,
+				memorySearch,
+				sort,
+			};
 		});
 	},
 });
 
-export const {} = wordSlice.actions;
+export const { setMemorySearch, setSort } = wordSlice.actions;
 export default wordSlice.reducer;

@@ -2,11 +2,11 @@ import axios from "axios";
 import { WordResponseApi } from "../types/word";
 
 export const fetchWordAPI = async (
-  currentPage: number,
-  memorySearch: string = "",
-  sort: string = ""
+	currentPage: number,
+	memorySearch: string = "",
+	sort: string = ""
 ) => {
-  try {
+	try {
 		let url = `http://localhost:8000/api/word?page=${currentPage}`;
 		if (memorySearch) {
 			url += `&memorySearch=${memorySearch}`;
@@ -18,8 +18,8 @@ export const fetchWordAPI = async (
 			withCredentials: true,
 			withXSRFToken: true,
 		});
-		return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch words');
-  }
-}
+		return { ...response.data, memorySearch, sort };
+	} catch (error) {
+		throw new Error("Failed to fetch words");
+	}
+};

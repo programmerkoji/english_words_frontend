@@ -15,17 +15,15 @@ export const userSlice = createSlice({
 			state.userAuth = true;
 			state.userId = action.payload.id;
 			state.userName = action.payload.name;
-			sessionStorage.setItem('userId', action.payload.id);
-			sessionStorage.setItem('userName', action.payload.name);
-      sessionStorage.setItem('userAuth', 'true');
+			sessionStorage.setItem("userId", action.payload.id);
+			sessionStorage.setItem("userName", action.payload.name);
+			sessionStorage.setItem("userAuth", "true");
 		},
 		logout: (state) => {
 			state.userAuth = false;
 			state.userId = null;
 			state.userName = null;
-			sessionStorage.removeItem('userId');
-			sessionStorage.removeItem('userName');
-			sessionStorage.removeItem('userAuth');
+			sessionStorage.clear();
 		},
 	},
 });
