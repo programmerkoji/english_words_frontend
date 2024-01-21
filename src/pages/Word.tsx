@@ -70,11 +70,7 @@ export const Word: FC = () => {
                       handleCreateSubmit={handleCreateSubmit}
                       handleInputChange={handleInputChange}
                     />
-                    <Search
-                      selectData={selectData}
-                      handleSelectChange={handleSelectChange}
-                      handleSearchSubmit={handleSearchSubmit}
-                    /> */}
+                    */}
 											<Search />
 										</div>
 										<WordList />
