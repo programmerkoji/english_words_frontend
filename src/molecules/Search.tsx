@@ -12,7 +12,7 @@ export type selectData = {
 
 export const Search = () => {
 	const dispatch = useAppDispatch();
-	const wordData = useSelector((state: RootState) => state.word);
+	const wordData = useSelector((state: RootState) => state.word.initialState);
 
 	const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const { name, value } = e.target;

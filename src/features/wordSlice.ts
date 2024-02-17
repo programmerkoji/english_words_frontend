@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { WordResponseApi } from "../types/word";
-import { fetchWordAPI } from "../api/fetchWordAPI";
+import { CreateWord, Word, WordResponseApi } from "../types/word";
+import { fetchWordAPI, storeWordAPI } from "../api/wordAPI";
+import { RootState } from "../app/store";
 
 const initialState: WordResponseApi = {
 	current_page: 1,
@@ -33,14 +34,16 @@ export const fetchWords = createAsyncThunk(
 
 export const wordSlice = createSlice({
 	name: "word",
-	initialState,
+	initialState: {
+		initialState
+	},
 	reducers: {
 		setMemorySearch: (state, action) => {
-			state.memorySearch = action.payload;
+			state.initialState.memorySearch = action.payload;
 			sessionStorage.setItem("memorySearch", action.payload);
 		},
 		setSort: (state, action) => {
-			state.sort = action.payload;
+			state.initialState.sort = action.payload;
 			sessionStorage.setItem("sort", action.payload);
 		},
 	},
@@ -49,17 +52,20 @@ export const wordSlice = createSlice({
 			const { current_page, data, last_page, total, memorySearch, sort } =
 				action.payload;
 			return {
-				...state,
-				current_page,
-				data,
-				last_page,
-				total,
-				memorySearch,
-				sort,
+				initialState: {
+          ...state.initialState,
+          current_page,
+          data,
+          last_page,
+          total,
+          memorySearch,
+          sort,
+        },
 			};
 		});
 	},
 });
 
+export const test = (state: RootState) => state.word.initialState;
 export const { setMemorySearch, setSort } = wordSlice.actions;
 export default wordSlice.reducer;

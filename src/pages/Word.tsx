@@ -11,7 +11,7 @@ import { Search } from "../molecules/Search";
 
 export const Word: FC = () => {
 	const dispatch = useAppDispatch();
-	const wordData = useSelector((state: RootState) => state.word);
+	const wordData = useSelector((state: RootState) => state.word.initialState);
 
 	const handleChangePage = (
 		event: React.ChangeEvent<unknown>,

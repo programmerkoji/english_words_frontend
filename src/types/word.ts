@@ -19,3 +19,11 @@ export type WordResponseApi = {
   memorySearch: string;
   sort: string;
 }
+
+export type CreateWord = {
+  word_en: string;
+  word_ja: string;
+  part_of_speech: number;
+  memory: number;
+  memo: string;
+}

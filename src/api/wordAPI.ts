@@ -1,13 +1,15 @@
 import axios from "axios";
 import { WordResponseApi } from "../types/word";
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export const fetchWordAPI = async (
 	currentPage: number,
 	memorySearch: string = "",
 	sort: string = ""
 ) => {
 	try {
-		let url = `http://localhost:8000/api/word?page=${currentPage}`;
+		let url = `${API_BASE_URL}/api/word?page=${currentPage}`;
 		if (memorySearch) {
 			url += `&memorySearch=${memorySearch}`;
 		}
@@ -21,5 +23,28 @@ export const fetchWordAPI = async (
 		return { ...response.data, memorySearch, sort };
 	} catch (error) {
 		throw new Error("Failed to fetch words");
+	}
+};
+
+export const storeWordAPI = async (
+	word_en: string,
+	word_ja: string,
+	part_of_speech: number,
+	memory: number,
+	memo: string
+) => {
+	try {
+		const response = await axios.post<WordResponseApi>(
+			`${API_BASE_URL}/api/word`,
+			{ word_en, word_ja, part_of_speech, memory, memo },
+			{
+				withCredentials: true,
+				withXSRFToken: true,
+			}
+		);
+		console.log(response);
+		
+	} catch (error) {
+		console.log(error);
 	}
 };
