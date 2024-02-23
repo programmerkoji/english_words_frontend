@@ -12,7 +12,7 @@ export type selectData = {
 
 export const Search = () => {
 	const dispatch = useAppDispatch();
-	const wordData = useSelector((state: RootState) => state.word.initialState);
+	const wordData = useSelector((state: RootState) => state.word);
 
 	const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const { name, value } = e.target;
@@ -20,7 +20,7 @@ export const Search = () => {
 		if (name === "memorySearch") {
 			dispatch(
 				fetchWords({
-					currentPage: wordData.current_page,
+					currentPage: 1,
 					memorySearch: value,
 					sort: wordData.sort,
 				})
@@ -29,7 +29,7 @@ export const Search = () => {
 		} else if (name === "sort") {
 			dispatch(
 				fetchWords({
-					currentPage: wordData.current_page,
+					currentPage: 1,
 					memorySearch: wordData.memorySearch,
 					sort: value,
 				})

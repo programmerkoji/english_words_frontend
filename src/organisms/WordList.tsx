@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 
 export const WordList = () => {
-	const wordData = useSelector((state: RootState) => state.word.initialState);
+	const wordData = useSelector((state: RootState) => state.word);
 
 	const memoryInfo = (memorySelectData: number) => {
 		let memoryImageUrl = "";

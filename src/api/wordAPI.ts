@@ -42,8 +42,7 @@ export const storeWordAPI = async (
 				withXSRFToken: true,
 			}
 		);
-		console.log(response);
-		
+		return response.data;
 	} catch (error) {
 		console.log(error);
 	}
