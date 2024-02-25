@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CreateWord, Word, WordResponseApi } from "../types/word";
 import { fetchWordAPI, storeWordAPI } from "../api/wordAPI";
 import { RootState } from "../app/store";
+import { AxiosError } from "axios";
 
 const initialWordState: WordResponseApi = {
 	current_page: 1,
