@@ -4,7 +4,7 @@ import { Memory, PartOfSpeech } from "../consts/constants";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { useAppDispatch } from "../app/hooks";
-import { fetchWordCreate, fetchWords } from "../features/wordSlice";
+import { fetchWordCreate, fetchWords, setMessage } from "../features/wordSlice";
 
 export const Create = () => {
 	const dispatch = useAppDispatch();
@@ -35,6 +35,7 @@ export const Create = () => {
 					sort: sort,
 				})
 			);
+			dispatch(setMessage(true));
 		});
 		setShouldResetForm(true);
 	};

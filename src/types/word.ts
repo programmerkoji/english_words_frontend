@@ -1,3 +1,5 @@
+import { SnackbarOrigin } from "@mui/material";
+
 export type Word = {
 	id: number;
 	user_id: number;
@@ -11,6 +13,10 @@ export type Word = {
 	deleted_at: string | null;
 };
 
+interface DialogSetting extends SnackbarOrigin {
+	open: boolean;
+}
+
 export type WordResponseApi = {
 	current_page: number;
 	data: Word[];
@@ -19,6 +25,7 @@ export type WordResponseApi = {
 	memorySearch: string;
 	sort: string;
 	message: string;
+	dialogSetting: DialogSetting;
 };
 
 export type CreateWord = {

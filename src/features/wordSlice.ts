@@ -12,6 +12,11 @@ const initialWordState: WordResponseApi = {
 	memorySearch: sessionStorage.getItem("memorySearch") || "",
 	sort: sessionStorage.getItem("sort") || "",
 	message: "",
+	dialogSetting: {
+		open: false,
+		vertical: "top",
+		horizontal: "center",
+	},
 };
 
 const createWordState: CreateWord = {
@@ -84,6 +89,9 @@ export const wordSlice = createSlice({
 			state.current_page = action.payload;
 			sessionStorage.setItem("currentPage", action.payload);
 		},
+		setMessage: (state, action) => {
+			state.dialogSetting.open = action.payload;
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchWords.fulfilled, (state, action) => {
@@ -108,5 +116,5 @@ export const wordSlice = createSlice({
 	},
 });
 
-export const { setMemorySearch, setSort, setCurrentPage } = wordSlice.actions;
+export const { setMemorySearch, setSort, setCurrentPage, setMessage } = wordSlice.actions;
 export default wordSlice.reducer;

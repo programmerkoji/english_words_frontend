@@ -4,25 +4,17 @@ import { Header } from "../organisms/Header";
 import { useAppDispatch } from "../app/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
-import { fetchWords, setCurrentPage } from "../features/wordSlice";
-import { Alert, Pagination, Snackbar, SnackbarOrigin } from "@mui/material";
+import { fetchWords, setCurrentPage, setMessage } from "../features/wordSlice";
+import { Alert, Pagination, Snackbar } from "@mui/material";
 import { WordList } from "../organisms/WordList";
 import { Search } from "../molecules/Search";
 import { Create } from "../organisms/Create";
 
-interface State extends SnackbarOrigin {
-	open: boolean;
-}
-
 export const Word: FC = () => {
 	const dispatch = useAppDispatch();
-	const [state, setState] = React.useState<State>({
-		open: false,
-		vertical: "top",
-		horizontal: "center",
-	});
-	const { vertical, horizontal, open } = state;
 	const wordData = useSelector((state: RootState) => state.word);
+	const { vertical, horizontal, open } = wordData.dialogSetting;
+	console.log(vertical);
 
 	const handleClose = (
 		event?: React.SyntheticEvent | Event,
@@ -31,7 +23,7 @@ export const Word: FC = () => {
 		if (reason === "clickaway") {
 			return;
 		}
-		setState({ ...state, open: false });
+		dispatch(setMessage(false));
 	};
 
 	const handleChangePage = (
@@ -68,24 +60,22 @@ export const Word: FC = () => {
 				<Nav />
 				<Header />
 				<main>
-					{/* {wordData.message && ( */}
-						<Snackbar
-							anchorOrigin={{ vertical, horizontal }}
-							open={open}
-							autoHideDuration={3000}
+					<Snackbar
+						anchorOrigin={{ vertical, horizontal }}
+						open={open}
+						autoHideDuration={3000}
+						onClose={handleClose}
+						message={wordData.message}
+						key={vertical + horizontal}
+					>
+						<Alert
 							onClose={handleClose}
-							message={wordData.message}
-							key={vertical + horizontal}
+							severity="success"
+							sx={{ width: "100%" }}
 						>
-							<Alert
-								onClose={handleClose}
-								severity="success"
-								sx={{ width: "100%" }}
-							>
-								{wordData.message}
-							</Alert>
-						</Snackbar>
-					{/* )} */}
+							{wordData.message}
+						</Alert>
+					</Snackbar>
 					<div className="py-12">
 						<div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
 							<div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
