@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../app/hooks";
 import { MemorySymbol, Sort } from "../consts/constants";
 import { RootState } from "../app/store";
-import { fetchWords, setMemorySearch, setSort } from "../features/wordSlice";
+import { fetchWords, setCurrentPage, setMemorySearch, setSort } from "../features/wordSlice";
 import { ChangeEvent, useEffect } from "react";
 
 export type selectData = {
@@ -26,6 +26,7 @@ export const Search = () => {
 				})
 			);
 			dispatch(setMemorySearch(value));
+			dispatch(setCurrentPage(1));
 		} else if (name === "sort") {
 			dispatch(
 				fetchWords({
@@ -35,6 +36,7 @@ export const Search = () => {
 				})
 			);
 			dispatch(setSort(value));
+			dispatch(setCurrentPage(1));
 		}
 	};
 
@@ -69,6 +71,7 @@ export const Search = () => {
 			<select
 				name="sort"
 				className="w-1/2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+				value={wordData.sort}
 				onChange={handleSelectChange}
 			>
 				{Sort.map((item) => (

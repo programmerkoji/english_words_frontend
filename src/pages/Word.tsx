@@ -14,7 +14,6 @@ export const Word: FC = () => {
 	const dispatch = useAppDispatch();
 	const wordData = useSelector((state: RootState) => state.word);
 	const { vertical, horizontal, open } = wordData.dialogSetting;
-	console.log(vertical);
 
 	const handleClose = (
 		event?: React.SyntheticEvent | Event,
