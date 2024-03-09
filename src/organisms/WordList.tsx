@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
+import { Answer } from "./Answer";
 
 export const WordList = () => {
 	const wordData = useSelector((state: RootState) => state.word);
@@ -49,7 +50,7 @@ export const WordList = () => {
 									<p className="text-lg text-gray-900 font-medium title-font break-words mb-1">
 										{word.word_en}
 									</p>
-									{/* <Answer {...otherProps} /> */}
+									<Answer id={ word.id } />
 								</div>
 							</div>
 							<div className="w-1/4">
