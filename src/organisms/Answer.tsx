@@ -56,7 +56,7 @@ export const Answer: FC<Props> = (props) => {
 						/>
 					</div>
 					<div className="modal__memo">
-						<p>test</p>
+						<p style={{whiteSpace: 'pre-line'}}>{ selectedWord?.memo }</p>
 					</div>
 				</DialogContent>
 				<DialogActions>
