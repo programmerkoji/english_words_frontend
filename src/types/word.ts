@@ -26,6 +26,7 @@ export type WordResponseApi = {
 	sort: string;
 	message: string;
 	dialogSetting: DialogSetting;
+	isFormSubmitted: boolean;
 };
 
 export type CreateWord = {

@@ -4,25 +4,29 @@ import { Memory, PartOfSpeech } from "../consts/constants";
 import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { useAppDispatch } from "../app/hooks";
-import { fetchWordCreate, fetchWords, setMessage } from "../features/wordSlice";
+import {
+	editWord,
+	fetchWordCreate,
+	fetchWords,
+	resetFormData,
+	setFormSubmitted,
+	setMessage,
+} from "../features/wordSlice";
 
 export const Create = () => {
 	const dispatch = useAppDispatch();
-	const { current_page, memorySearch, sort } = useSelector(
-		(state: RootState) => state.word
-	);
-
-	const [word_en, setWordEn] = useState("");
-	const [word_ja, setWordJa] = useState("");
-	const [part_of_speech, setPartOfSpeech] = useState(0);
-	const [memory, setMemory] = useState(0);
-	const [memo, setMemo] = useState("");
-	const [shouldResetForm, setShouldResetForm] = useState(false);
+	const { current_page, memorySearch, sort, formData, isFormSubmitted } =
+		useSelector((state: RootState) => state.word);
+	const { word_en, word_ja, part_of_speech, memory, memo } = formData;
 
 	const [open, setOpen] = useState<boolean>(false);
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
+
+	const handleInputChange = (fieldName: string, value: string | number) => {
+		dispatch(editWord({ fieldName, value }));
+	};
 
 	const handleCreateWord = () => {
 		dispatch(
@@ -37,18 +41,13 @@ export const Create = () => {
 			);
 			dispatch(setMessage(true));
 		});
-		setShouldResetForm(true);
+		dispatch(setFormSubmitted());
 	};
 	useEffect(() => {
-		if (shouldResetForm) {
-			setWordEn("");
-			setWordJa("");
-			setPartOfSpeech(0);
-			setMemory(0);
-			setMemo("");
-			setShouldResetForm(false);
+		if (isFormSubmitted) {
+			dispatch(resetFormData());
 		}
-	}, [shouldResetForm]);
+	}, [dispatch, isFormSubmitted]);
 
 	return (
 		<>
@@ -75,7 +74,9 @@ export const Create = () => {
 										name="word_en"
 										value={word_en}
 										className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-										onChange={(e) => setWordEn(e.target.value)}
+										onChange={(e) =>
+											handleInputChange("word_en", e.target.value)
+										}
 									/>
 									<p className="text-rose-700"></p>
 								</div>
@@ -91,7 +92,9 @@ export const Create = () => {
 										name="word_ja"
 										value={word_ja}
 										className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-										onChange={(e) => setWordJa(e.target.value)}
+										onChange={(e) =>
+											handleInputChange("word_ja", e.target.value)
+										}
 									/>
 									<p className="text-rose-700"></p>
 								</div>
@@ -106,7 +109,10 @@ export const Create = () => {
 										className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
 										value={part_of_speech}
 										onChange={(e) =>
-											setPartOfSpeech(parseInt(e.target.value, 10))
+											handleInputChange(
+												"part_of_speech",
+												parseInt(e.target.value, 10)
+											)
 										}
 									>
 										{/* <option value="">選択してください</option> */}
@@ -128,7 +134,9 @@ export const Create = () => {
 										name="memory"
 										className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
 										value={memory}
-										onChange={(e) => setMemory(parseInt(e.target.value, 10))}
+										onChange={(e) =>
+											handleInputChange("memory", parseInt(e.target.value, 10))
+										}
 									>
 										{/* <option value="">選択してください</option> */}
 										{Memory.map((item, index) => (
@@ -150,7 +158,7 @@ export const Create = () => {
 										name="memo"
 										className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
 										value={memo}
-										onChange={(e) => setMemo(e.target.value)}
+										onChange={(e) => handleInputChange("memo", e.target.value)}
 									/>
 								</div>
 							</div>

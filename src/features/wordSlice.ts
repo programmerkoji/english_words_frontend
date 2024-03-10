@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CreateWord, WordResponseApi } from "../types/word";
 import { fetchWordAPI, storeWordAPI } from "../api/wordAPI";
 
@@ -15,6 +15,7 @@ const initialWordState: WordResponseApi = {
 		vertical: "top",
 		horizontal: "center",
 	},
+	isFormSubmitted: false,
 };
 
 const createWordState: CreateWord = {
@@ -72,7 +73,7 @@ export const wordSlice = createSlice({
 	name: "word",
 	initialState: {
 		...initialWordState,
-		createWordState,
+		formData: createWordState,
 	},
 	reducers: {
 		setMemorySearch: (state, action) => {
@@ -89,7 +90,24 @@ export const wordSlice = createSlice({
 		},
 		setMessage: (state, action) => {
 			state.dialogSetting.open = action.payload;
-		}
+		},
+		editWord: (
+			state,
+			action: PayloadAction<{
+				fieldName: string;
+				value: string | number;
+			}>
+		) => {
+			const { fieldName, value } = action.payload;
+			state.formData = { ...state.formData, [fieldName]: value };
+		},
+		resetFormData: (state) => {
+			state.formData = createWordState;
+			state.isFormSubmitted = false;
+		},
+		setFormSubmitted: (state) => {
+			state.isFormSubmitted = true;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchWords.fulfilled, (state, action) => {
@@ -114,5 +132,13 @@ export const wordSlice = createSlice({
 	},
 });
 
-export const { setMemorySearch, setSort, setCurrentPage, setMessage } = wordSlice.actions;
+export const {
+	setMemorySearch,
+	setSort,
+	setCurrentPage,
+	setMessage,
+	editWord,
+	resetFormData,
+	setFormSubmitted,
+} = wordSlice.actions;
 export default wordSlice.reducer;
