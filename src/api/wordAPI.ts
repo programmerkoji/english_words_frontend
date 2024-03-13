@@ -53,3 +53,26 @@ export const storeWordAPI = async (
 		console.log(error);
 	}
 };
+
+export const updateWordAPI = async (
+	word_id: number | null,
+	word_en: string,
+	word_ja: string,
+	part_of_speech: number,
+	memory: number,
+	memo: string
+) => {
+	try {
+		const response = await axios.put<WordResponseApi>(
+			`${API_BASE_URL}/api/word/${word_id}`,
+			{ word_en, word_ja, part_of_speech, memory, memo },
+			{
+				withCredentials: true,
+				withXSRFToken: true,
+			}
+		);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+	}
+};

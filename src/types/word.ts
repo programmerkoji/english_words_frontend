@@ -30,6 +30,7 @@ export type WordResponseApi = {
 };
 
 export type CreateWord = {
+	word_id: number | null;
 	word_en: string;
 	word_ja: string;
 	part_of_speech: number;

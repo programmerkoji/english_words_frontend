@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CreateWord, WordResponseApi } from "../types/word";
-import { fetchWordAPI, storeWordAPI } from "../api/wordAPI";
+import { fetchWordAPI, storeWordAPI, updateWordAPI } from "../api/wordAPI";
 
 const initialWordState: WordResponseApi = {
 	current_page: 1,
@@ -19,6 +19,7 @@ const initialWordState: WordResponseApi = {
 };
 
 const createWordState: CreateWord = {
+	word_id: null,
 	word_en: "",
 	word_ja: "",
 	part_of_speech: 0,
@@ -58,6 +59,30 @@ export const fetchWordCreate = createAsyncThunk(
 	}) => {
 		try {
 			const response = await storeWordAPI(
+				params.word_en,
+				params.word_ja,
+				params.part_of_speech,
+				params.memory,
+				params.memo
+			);
+			return response;
+		} catch (error) {}
+	}
+);
+
+export const fetchWordUpdate = createAsyncThunk(
+	"word/fetchWordUpdate",
+	async (params: {
+		word_id: number | null;
+		word_en: string;
+		word_ja: string;
+		part_of_speech: number;
+		memory: number;
+		memo: string;
+	}) => {
+		try {
+			const response = await updateWordAPI(
+				params.word_id,
 				params.word_en,
 				params.word_ja,
 				params.part_of_speech,
@@ -124,6 +149,12 @@ export const wordSlice = createSlice({
 			};
 		});
 		builder.addCase(fetchWordCreate.fulfilled, (state, action) => {
+			return {
+				...state,
+				...action.payload,
+			};
+		});
+		builder.addCase(fetchWordUpdate.fulfilled, (state, action) => {
 			return {
 				...state,
 				...action.payload,

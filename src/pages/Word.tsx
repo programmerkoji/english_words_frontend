@@ -82,7 +82,7 @@ export const Word: FC = () => {
 									<div className="text-gray-600 body-font">
 										<div className="mb-4"></div>
 										<div className="mb-6 flex items-center flex-wrap gap-4">
-											<Create />
+											<Create word_id={null} />
 											<Search />
 										</div>
 										<WordList />
