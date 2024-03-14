@@ -1,4 +1,4 @@
-import { SnackbarOrigin } from "@mui/material";
+import { AlertColor, SnackbarOrigin } from "@mui/material";
 
 export type Word = {
 	id: number;
@@ -15,6 +15,7 @@ export type Word = {
 
 interface DialogSetting extends SnackbarOrigin {
 	open: boolean;
+	severity: AlertColor | undefined;
 }
 
 export type WordResponseApi = {

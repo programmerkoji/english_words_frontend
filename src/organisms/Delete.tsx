@@ -32,7 +32,7 @@ const Delete: FC<Props> = (props) => {
 					sort: sort,
 				})
 			);
-			dispatch(setMessage(true));
+			dispatch(setMessage({open: true, severity: "error"}));
 		});
 		setDeleteOpen(false);
 	};

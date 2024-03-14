@@ -13,7 +13,7 @@ import { Create } from "../organisms/Create";
 export const Word: FC = () => {
 	const dispatch = useAppDispatch();
 	const wordData = useSelector((state: RootState) => state.word);
-	const { vertical, horizontal, open } = wordData.dialogSetting;
+	const { vertical, horizontal, open, severity } = wordData.dialogSetting;
 
 	const handleClose = (
 		event?: React.SyntheticEvent | Event,
@@ -69,7 +69,7 @@ export const Word: FC = () => {
 					>
 						<Alert
 							onClose={handleClose}
-							severity="success"
+							severity={severity}
 							sx={{ width: "100%" }}
 						>
 							{wordData.message}

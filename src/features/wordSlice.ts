@@ -19,6 +19,7 @@ const initialWordState: WordResponseApi = {
 		open: false,
 		vertical: "top",
 		horizontal: "center",
+		severity: "success",
 	},
 	isFormSubmitted: false,
 };
@@ -129,7 +130,10 @@ export const wordSlice = createSlice({
 			sessionStorage.setItem("currentPage", action.payload);
 		},
 		setMessage: (state, action) => {
-			state.dialogSetting.open = action.payload;
+			const { open, severity } = action.payload;
+
+			state.dialogSetting.open = open;
+			state.dialogSetting.severity = severity;
 		},
 		editWord: (
 			state,

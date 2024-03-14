@@ -65,7 +65,7 @@ export const Create: FC<Props> = (props) => {
 						sort: sort,
 					})
 				);
-				dispatch(setMessage(true));
+				dispatch(setMessage({open: true, severity: "success"}));
 			});
 		} else {
 			dispatch(
@@ -85,7 +85,7 @@ export const Create: FC<Props> = (props) => {
 						sort: sort,
 					})
 				);
-				dispatch(setMessage(true));
+				dispatch(setMessage({open: true, severity: "success"}));
 			});
 		}
 		dispatch(setFormSubmitted());
