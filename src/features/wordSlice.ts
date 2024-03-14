@@ -1,6 +1,11 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CreateWord, WordResponseApi } from "../types/word";
-import { fetchWordAPI, storeWordAPI, updateWordAPI } from "../api/wordAPI";
+import {
+	deleteWordAPI,
+	fetchWordAPI,
+	storeWordAPI,
+	updateWordAPI,
+} from "../api/wordAPI";
 
 const initialWordState: WordResponseApi = {
 	current_page: 1,
@@ -94,6 +99,16 @@ export const fetchWordUpdate = createAsyncThunk(
 	}
 );
 
+export const fetchWordDelete = createAsyncThunk(
+	"word/fetchWordDelete",
+	async (word_id: number) => {
+		try {
+			const response = await deleteWordAPI(word_id);
+			return response;
+		} catch (error) {}
+	}
+);
+
 export const wordSlice = createSlice({
 	name: "word",
 	initialState: {
@@ -155,6 +170,12 @@ export const wordSlice = createSlice({
 			};
 		});
 		builder.addCase(fetchWordUpdate.fulfilled, (state, action) => {
+			return {
+				...state,
+				...action.payload,
+			};
+		});
+		builder.addCase(fetchWordDelete.fulfilled, (state, action) => {
 			return {
 				...state,
 				...action.payload,

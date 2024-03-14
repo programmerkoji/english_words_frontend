@@ -76,3 +76,20 @@ export const updateWordAPI = async (
 		console.log(error);
 	}
 };
+
+export const deleteWordAPI = async (
+	word_id: number,
+) => {
+	try {
+		const response = await axios.delete<WordResponseApi>(
+			`${API_BASE_URL}/api/word/${word_id}`,
+			{
+				withCredentials: true,
+				withXSRFToken: true,
+			}
+		);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+	}
+};

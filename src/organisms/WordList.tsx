@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { Answer } from "./Answer";
 import { Create } from "./Create";
+import Delete from "./Delete";
 
 export const WordList = () => {
 	const wordData = useSelector((state: RootState) => state.word);
@@ -56,14 +57,10 @@ export const WordList = () => {
 							</div>
 							<div className="w-1/4">
 								<div className="text-right">
-									{/* <Update
-                                    onUpdateSuccess={onUpdateSuccess}
-                                    data={otherProps}
-                                  /> */}
 									<Create word_id={word.id} />
 								</div>
 								<div className="text-right mt-2">
-									{/* <Delete word_id={otherProps.word_id} onDelete={onDelete} /> */}
+									<Delete word_id={word.id} />
 								</div>
 							</div>
 							<div className="w-full text-right mt-3">
