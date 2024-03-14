@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { Memory, PartOfSpeech } from "../consts/constants";
 import "./Answer.css";
+import { useAppDispatch } from "../app/hooks";
+import { fetchWordUpdate, fetchWords, setMessage } from "../features/wordSlice";
 
 type Props = {
 	id: number;
@@ -12,8 +14,9 @@ type Props = {
 
 export const Answer: FC<Props> = (props) => {
 	const { id } = props;
-	const wordData = useSelector((state: RootState) => state.word.data);
-	const selectedWord = wordData.find((item) => item.id === id);
+	const dispatch = useAppDispatch();
+	const {data, current_page, memorySearch, sort} = useSelector((state: RootState) => state.word);
+	const selectedWord = data.find((item) => item.id === id);
 	let selectedPartOfSpeech;
 	for (let index = 0; index < PartOfSpeech.length; index++) {
 		if (index === selectedWord?.part_of_speech) {
@@ -26,6 +29,32 @@ export const Answer: FC<Props> = (props) => {
 
 	const handleClickAnswer = () => setAnswerOpen(true);
 	const handleCloseAnswer = () => setAnswerOpen(false);
+	const handleMemoryUpdate = (word_id: number, memory: number) => {
+		const word_en = selectedWord ? selectedWord.word_en : '';
+		const word_ja = selectedWord ? selectedWord.word_ja : '';
+		const part_of_speech = selectedWord ? selectedWord.part_of_speech : 0;
+		const memo = selectedWord ? selectedWord.memo : '';
+		dispatch(
+			fetchWordUpdate({
+				word_id,
+				word_en,
+				word_ja,
+				part_of_speech,
+				memory,
+				memo,
+			})
+		).then(() => {
+			dispatch(
+				fetchWords({
+					currentPage: current_page,
+					memorySearch: memorySearch,
+					sort: sort,
+				})
+			);
+			dispatch(setMessage({open: true, severity: "success"}));
+		});
+	}
+
 	return (
 		<>
 			<button
@@ -72,6 +101,7 @@ export const Answer: FC<Props> = (props) => {
 											? "modal__btn select"
 											: "modal__btn"
 									}
+									onClick={() => handleMemoryUpdate(id, index)}
 								>
 									{item}
 								</button>
