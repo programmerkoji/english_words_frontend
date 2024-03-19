@@ -1,10 +1,11 @@
 import axios from "axios";
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export const logoutUser = async () => {
 	try {
-		// await axios.get("http://localhost:8000/sanctum/csrf-cookie");
 		const response = await axios.post(
-			"http://localhost:8000/api/logout",
+			`${API_BASE_URL}/api/logout`,
 			{},
 			{
 				withCredentials: true,

@@ -1,10 +1,12 @@
 import axios from "axios";
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 export const loginUser = async (email: string, password: string) => {
 	try {
-		await axios.get("http://localhost:8000/sanctum/csrf-cookie");
+		await axios.get(`${API_BASE_URL}/sanctum/csrf-cookie`);
 		const response = await axios.post(
-			"http://localhost:8000/api/login",
+			`${API_BASE_URL}/api/login`,
 			{ email, password },
 			{
 				withCredentials: true,
