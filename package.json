@@ -1,5 +1,6 @@
 {
-  "name": "sanctum_front",
+  "homepage": "./",
+  "name": "english_word",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

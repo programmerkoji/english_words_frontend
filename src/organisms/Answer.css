@@ -1,10 +1,10 @@
 /**************************\
   Basic Modal Styles
 \**************************/
-.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+.MuiPaper-root.MuiPaper-elevation {
   width: 100%;
 }
-.css-knqc4i-MuiDialogActions-root.MuiDialogActions-spacing {
+.MuiDialogActions-root.MuiDialogActions-spacing {
   padding: 20px 24px;
 }
 
