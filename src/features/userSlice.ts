@@ -5,6 +5,13 @@ const initialState: InitialUserState = {
 	userAuth: false,
 	userId: null,
 	userName: null,
+	message: "",
+	dialogSetting: {
+		open: false,
+		vertical: "top",
+		horizontal: "center",
+		severity: "success",
+	},
 };
 
 export const userSlice = createSlice({
@@ -25,8 +32,15 @@ export const userSlice = createSlice({
 			state.userName = null;
 			sessionStorage.clear();
 		},
+		setMessage: (state, action) => {
+			const { open, severity, message } = action.payload;
+
+			state.dialogSetting.open = open;
+			state.dialogSetting.severity = severity;
+			state.message = message;
+		},
 	},
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, setMessage } = userSlice.actions;
 export default userSlice.reducer;

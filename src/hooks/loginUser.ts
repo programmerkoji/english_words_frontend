@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -15,6 +15,10 @@ export const loginUser = async (email: string, password: string) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.log(error);
+		const axiosError = error as AxiosError<any>;
+		const { response } = axiosError;
+		if (response && response.status === 422) {
+			return response.data;
+		}
 	}
 };

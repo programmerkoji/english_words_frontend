@@ -1,21 +1,53 @@
-import React, { FormEvent, useState } from 'react'
-import { loginUser } from '../hooks/loginUser';
-import { useAppDispatch } from '../app/hooks';
-import { login } from '../features/userSlice';
+import React, { FormEvent, useState } from "react";
+import { loginUser } from "../hooks/loginUser";
+import { useAppDispatch } from "../app/hooks";
+import { login, setMessage } from "../features/userSlice";
+import { Alert, Snackbar } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
 
 export const Login = () => {
 	const dispatch = useAppDispatch();
+	const { dialogSetting, message } = useSelector((state: RootState) => state.user);
+	const { vertical, horizontal, open, severity } = dialogSetting;
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
+	const handleClose = (
+		event?: React.SyntheticEvent | Event,
+		reason?: string
+	) => {
+		if (reason === "clickaway") {
+			return;
+		}
+		dispatch(setMessage(false));
+	};
+
 	const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-    const response = await loginUser(email, password);
-		dispatch(login(response))
-	}
+		const response = await loginUser(email, password);
+		if (response.errors) {
+			dispatch(setMessage({ open: true, severity: "error", message: response.message}))
+		} else {
+			dispatch(login(response));
+		}
+	};
 
 	return (
 		<div className="font-sans text-gray-900 antialiased">
+			<Snackbar
+				anchorOrigin={{ vertical, horizontal }}
+				open={open}
+				autoHideDuration={3000}
+				onClose={handleClose}
+				message={message}
+				key={vertical + horizontal}
+			>
+				<Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+					{message}
+				</Alert>
+			</Snackbar>
 			<div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
 				<div>
 					<p className="w-14">
@@ -50,7 +82,7 @@ export const Login = () => {
 								type="email"
 								name="email"
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                required
+								required
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</div>
@@ -62,7 +94,7 @@ export const Login = () => {
 								type="password"
 								name="password"
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                required
+								required
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 						</div>
@@ -79,4 +111,4 @@ export const Login = () => {
 			</div>
 		</div>
 	);
-}
+};
