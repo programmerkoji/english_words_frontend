@@ -11,8 +11,8 @@ export const Login = () => {
 	const { dialogSetting, message } = useSelector((state: RootState) => state.user);
 	const { vertical, horizontal, open, severity } = dialogSetting;
 
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("test@test.com");
+	const [password, setPassword] = useState("password1234");
 
 	const handleClose = (
 		event?: React.SyntheticEvent | Event,
@@ -83,6 +83,7 @@ export const Login = () => {
 								name="email"
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 								required
+								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</div>
@@ -95,6 +96,7 @@ export const Login = () => {
 								name="password"
 								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 								required
+								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 						</div>
