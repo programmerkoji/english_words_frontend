@@ -2,7 +2,6 @@ import axios, { AxiosError } from "axios";
 import { WordResponseApi } from "../types/word";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const fetchWordAPI = async (
 	currentPage: number,
@@ -26,7 +25,7 @@ export const fetchWordAPI = async (
 		const axiosError = error as AxiosError;
 		if (axiosError.request.status === 401) {
 			sessionStorage.clear();
-			window.location.href = `${BASE_URL}/login`;
+			window.location.href = `${API_BASE_URL}/login`;
 		}
 		throw new Error("Failed to fetch words");
 	}
